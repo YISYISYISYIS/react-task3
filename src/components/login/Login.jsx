@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../constext/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(AuthContext);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (id.length < 4 || id.length > 11) {
@@ -18,11 +21,28 @@ const Login = () => {
       alert("비밀번호는 4~15글자 사이여야 합니다");
       return;
     }
-
-    console.log(id);
-    console.log(password);
-
-    navigate("/");
+    // console.log(id);
+    // console.log(password);
+    // navigate("/");
+    try {
+      const response = await axios.post(
+        "https://moneyfulpublicpolicy.co.kr/login",
+        {
+          id,
+          password,
+        }
+      );
+      const data = response.data;
+      if (data.success) {
+        login(data);
+        navigate("/");
+      } else {
+        alert("로그인에 실패하였습니다.");
+      }
+    } catch (error) {
+      console.log("login error", error);
+      alert("로그인에 실패하였습니다.");
+    }
   };
 
   const handleSignUp = () => {

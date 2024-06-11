@@ -3,14 +3,11 @@ import List from "../components/List";
 import Form from "../components/Form";
 import styled from "styled-components";
 import SpendingChart from "../components/SpendingChart";
-import Login from "../components/login/Login";
-import SignUp from "../components/login/SignUp";
+import Header from "../components/header/Header";
 
 const Home = () => {
   return (
     <StyledHome>
-      <Login />
-      <SignUp />
       <Form />
       <Calendars />
       <SpendingChart />
