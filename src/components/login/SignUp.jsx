@@ -1,26 +1,76 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (id.length < 4 || id.length > 11) {
+      alert("아이디는 4~10글자 사이여야 합니다");
+      return;
+    }
+    if (password.length < 4 || password.length > 16) {
+      alert("비밀번호는 4~15글자 사이여야 합니다");
+      return;
+    }
+    if (password.length < 1 || password.length > 11) {
+      alert("닉네임은 2~10글자 사이여야 합니다");
+      return;
+    }
+
+    console.log(id);
+    console.log(password);
+    console.log(nickname);
+    navigate("/");
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <SignUpContainer>
       <SignUpBox>
         <Title>Sign Up</Title>
-        <form>
+        <form onSubmit={onSubmit}>
           <InputLabel>아이디</InputLabel>
           <InputContainer>
-            <InputField type="text" placeholder="아이디" />
+            <InputField
+              type="text"
+              placeholder="아이디"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
           </InputContainer>
           <InputLabel>비밀번호</InputLabel>
           <InputContainer>
-            <InputField type="password" placeholder="비밀번호" />
+            <InputField
+              type="password"
+              placeholder="비밀번호"
+              autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </InputContainer>
           <InputLabel>닉네임</InputLabel>
           <InputContainer>
-            <InputField type="text" placeholder="닉네임" />
+            <InputField
+              type="text"
+              placeholder="닉네임"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
           </InputContainer>
           <Button type="submit">회원가입</Button>
-          <Button type="button">로그인</Button>
+          <Button type="button" onClick={handleLogin}>
+            로그인
+          </Button>
         </form>
       </SignUpBox>
     </SignUpContainer>
