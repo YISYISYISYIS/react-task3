@@ -5,8 +5,10 @@ import { AuthContext } from "../../constext/AuthProvider";
 import { useContext } from "react";
 const Header = () => {
   const navigation = useNavigate();
-  const { isAuthenticated, userName, profilePicture } = useContext(AuthContext);
+  const { isAuthenticated, userName, profilePicture, logout } =
+    useContext(AuthContext);
 
+  // console.log(isAuthenticated);
   if (!isAuthenticated) {
     return null;
   }
@@ -14,15 +16,16 @@ const Header = () => {
     // setIsLoggedIn(false);
     // setUserName("");
     // setProfilePicture("");
-    navigation("/");
+    logout();
+    navigation("/login");
   };
 
   return (
     // isLoggedIn && (
     <StyledHeader>
       <Logo>
-        <LogoLink href="/">My App</LogoLink>
-        <ProfileLink href="/">프로필 수정하기</ProfileLink>
+        <LogoLink href="/">Logo</LogoLink>
+        <ProfileLink href="/mypage">프로필 수정하기</ProfileLink>
       </Logo>
       <AuthButtons>
         <ProfileImage src={profilePicture} alt="Profile" />

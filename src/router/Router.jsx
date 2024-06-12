@@ -7,6 +7,8 @@ import SignUp from "../components/login/SignUp";
 import Login from "../components/login/Login";
 import { AuthContext } from "../constext/AuthProvider";
 import Header from "../components/header/Header";
+import Layout from "../components/Layout";
+import MyPage from "../components/login/MyPage";
 
 const PrivateRouter = ({ element: Element, ...rest }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -23,15 +25,21 @@ const Router = () => {
     <FilteredProvider>
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/SignUp" element={<PublicRouter element={SignUp} />} />
-          <Route path="/Login" element={<PublicRouter element={Login} />} />
-          <Route path="/" element={<PrivateRouter element={Home} />} />
-          <Route
-            path="/Detail/:id"
-            element={<PrivateRouter element={Detail} />}
-          />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/SignUp" element={<PublicRouter element={SignUp} />} />
+            <Route path="/Login" element={<PublicRouter element={Login} />} />
+            <Route path="/" element={<PrivateRouter element={Home} />} />
+            <Route
+              path="/Detail/:id"
+              element={<PrivateRouter element={Detail} />}
+            />
+            <Route
+              path="/MyPage"
+              element={<PrivateRouter element={MyPage} />}
+            />
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </FilteredProvider>
   );

@@ -23,9 +23,9 @@ const App = () => {
     <AuthProvider>
       <BooksProvider>
         <GlobalStyles />
-        <Layout>
-          <Router />
-        </Layout>
+        {/* <Layout> */}
+        <Router />
+        {/* </Layout> */}
       </BooksProvider>
     </AuthProvider>
   );
