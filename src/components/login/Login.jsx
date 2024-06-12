@@ -32,10 +32,12 @@ const Login = () => {
           password,
         }
       );
+
       const data = response.data;
       if (data.success) {
         login(data);
         navigate("/");
+        // console.log(data);
       } else {
         alert("로그인에 실패하였습니다.");
       }

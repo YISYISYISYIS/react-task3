@@ -1,21 +1,52 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../constext/AuthProvider";
 
 const MyPage = () => {
+  const { isAuthenticated, token } = useContext(AuthContext);
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(null);
+  const navigation = useNavigate();
+  // console.log(token);
+  const handleUpdateProfile = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("avatar", avatar);
+      formData.append("nickname", nickname);
 
-  const handleUpdateProfile = () => {
-    console.log("프로필변경");
+      const response = await axios.patch(
+        "https://moneyfulpublicpolicy.co.kr/profile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data;
+      // console.log(data);
+      if (data.success) {
+        alert("프로필 변경에 성공하였습니다");
+        navigation("/");
+      } else {
+        alert("프로필 정보를 가져오는데 실패하였습니다");
+      }
+    } catch (error) {
+      console.log("ProfileChange error", error);
+      alert("프로필 변경에 실패하였습니다");
+    }
   };
 
   return (
     <Container>
       <ProfileContainer>
         {avatar ? (
-          <AvatarImage src={avatar} alt="Profile" />
+          <AvatarImage src={avatar} alt="Profile 아바타 이미지" />
         ) : (
-          <AvatarImage src="/default-profile.jpg" alt="Profile" />
+          <AvatarImage src="/default-profile.jpg" alt="Profile 아바타 이미지" />
         )}
         <ProfileInputContainer>
           <AvatarImageInput

@@ -5,8 +5,7 @@ import { AuthContext } from "../../constext/AuthProvider";
 import { useContext } from "react";
 const Header = () => {
   const navigation = useNavigate();
-  const { isAuthenticated, userName, profilePicture, logout } =
-    useContext(AuthContext);
+  const { isAuthenticated, logout } = useContext(AuthContext);
 
   // console.log(isAuthenticated);
   if (!isAuthenticated) {
@@ -28,8 +27,8 @@ const Header = () => {
         <ProfileLink href="/mypage">프로필 수정하기</ProfileLink>
       </Logo>
       <AuthButtons>
-        <ProfileImage src={profilePicture} alt="Profile" />
-        <Nickname>{userName}</Nickname>
+        <ProfileImage src={"profilePicture"} alt="Profile" />
+        <Nickname>{"userName"}</Nickname>
         <Button onClick={handleLogout}>로그아웃</Button>
       </AuthButtons>
     </StyledHeader>
