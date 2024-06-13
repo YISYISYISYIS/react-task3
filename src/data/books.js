@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const JSON_SERVER_HOST = "http://localhost:5000";
+const JSON_SERVER_HOST = "https://busy-heathered-poison.glitch.me";
 
 export const getData = async () => {
   try {
