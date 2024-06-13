@@ -22,7 +22,7 @@ const Header = () => {
     <StyledHeader>
       <Logo>
         <LogoLink href="/">Logo</LogoLink>
-        <ProfileLink href="/mypage">프로필 수정하기</ProfileLink>
+        <ProfileLink href="/Mypage">프로필 수정하기</ProfileLink>
       </Logo>
       <AuthButtons>
         {userInfo && <ProfileImage src={userInfo.avatar} alt="Profile" />}
