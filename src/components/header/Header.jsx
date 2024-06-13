@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../constext/AuthProvider";
 import { useContext } from "react";
 const Header = () => {
@@ -21,8 +21,8 @@ const Header = () => {
     // isAuthenticated && (
     <StyledHeader>
       <Logo>
-        <LogoLink href="/">Logo</LogoLink>
-        <ProfileLink href="/Mypage">프로필 수정하기</ProfileLink>
+        <Link to="/">Logo</Link>
+        <Link to="/mypage">프로필 수정하기</Link>
       </Logo>
       <AuthButtons>
         {userInfo && <ProfileImage src={userInfo.avatar} alt="Profile" />}
@@ -48,13 +48,13 @@ const Logo = styled.div`
   align-items: center;
 `;
 
-const LogoLink = styled.a`
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  color: #fff;
-  cursor: pointer;
-`;
+// const Link = styled.link`
+//   font-size: 1.5rem;
+//   /* font-weight: bold; */
+//   text-decoration: none;
+//   color: #fff;
+//   cursor: pointer;
+// `;
 
 const Nickname = styled.span`
   margin: 0 1rem;
@@ -62,10 +62,10 @@ const Nickname = styled.span`
   cursor: pointer;
 `;
 
-const ProfileLink = styled(LogoLink)`
-  margin-left: 1rem;
-  cursor: pointer;
-`;
+// const Link = styled(LogoLink)`
+//   margin-left: 1rem;
+//   cursor: pointer;
+// `;
 
 const AuthButtons = styled.div`
   display: flex;

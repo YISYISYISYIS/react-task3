@@ -35,7 +35,7 @@ const Router = () => {
               element={<PrivateRouter element={Detail} />}
             />
             <Route
-              path="/MyPage"
+              path="/myPage"
               element={<PrivateRouter element={MyPage} />}
             />
           </Routes>
