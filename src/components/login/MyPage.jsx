@@ -5,11 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../constext/AuthProvider";
 
 const MyPage = () => {
-  const { isAuthenticated, token } = useContext(AuthContext);
+  const { userInfo, setUserInfo, token } = useContext(AuthContext);
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(null);
   const navigation = useNavigate();
   // console.log(token);
+
+  useEffect(() => {
+    if (userInfo) {
+      setNickname(userInfo.nickname);
+      setAvatar(userInfo.avatar);
+    }
+  }, [userInfo]);
+
   const handleUpdateProfile = async () => {
     try {
       const formData = new FormData();
@@ -31,6 +39,11 @@ const MyPage = () => {
       if (data.success) {
         alert("프로필 변경에 성공하였습니다");
         navigation("/");
+        setUserInfo({
+          ...userInfo,
+          nickname: data.nickname,
+          avatar: data.avatar,
+        });
       } else {
         alert("프로필 정보를 가져오는데 실패하였습니다");
       }

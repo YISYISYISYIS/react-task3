@@ -43,7 +43,7 @@ const Login = () => {
       }
     } catch (error) {
       console.log("login error", error);
-      alert("로그인에 실패하였습니다.");
+      alert("로그인 실패.");
     }
   };
 
