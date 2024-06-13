@@ -2,10 +2,22 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { FilteredContext } from "../constext/FilteredProvider";
+import { useQuery } from "@tanstack/react-query";
+import { getData } from "../data/books";
 
 const List = () => {
-  const { filteredBooks } = useContext(FilteredContext);
+  // const { filteredBooks } = useContext(FilteredContext);
   // console.log(books);
+
+  const {
+    data: filteredBooks = [],
+    isLoading,
+    error,
+  } = useQuery({ queryKey: ["books"], queryFn: getData });
+
+  // console.log(isLoading);
+  // console.log(filteredBooks);
+
   return (
     <StyledList>
       <StyledListInner>
@@ -17,6 +29,7 @@ const List = () => {
               {book.description}
             </Link>
             {book.amount}
+            작성자 :{book.createdBy}
           </StyledListItem>
         ))}
         {filteredBooks.length === 0 && (

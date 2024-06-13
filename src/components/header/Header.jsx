@@ -8,6 +8,7 @@ const Header = () => {
   const { isAuthenticated, logout, userInfo } = useContext(AuthContext);
   // console.log(userInfo);
   // console.log(isAuthenticated);
+
   if (!isAuthenticated) {
     return null;
   }
@@ -17,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    // isLoggedIn && (
+    // isAuthenticated && (
     <StyledHeader>
       <Logo>
         <LogoLink href="/">Logo</LogoLink>

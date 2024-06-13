@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Layout from "../components/Layout";
 import FormButton from "../components/form/FormButton";
 import { BooksContext } from "../constext/BooksProvider";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { putData, deleteData } from "../data/books";
 
 const Detail = () => {
   const { setBooks } = useContext(BooksContext);
@@ -18,8 +20,25 @@ const Detail = () => {
   const amountRef = useRef(book.amount);
   const itemREf = useRef(book.item);
 
+  const mutationEdit = useMutation({
+    mutationFn: putData,
+    onSuccess: () => {
+      navigate("/");
+      queryClient.invalidateQueries(["books"]);
+    },
+  });
+
+  const mutationDelete = useMutation({
+    mutationFn: deleteData,
+    onSuccess: () => {
+      navigate("/");
+      queryClient.invalidateQueries(["books"]);
+    },
+  });
+
   const onClickInputChange = () => {
     const newBook = {
+      ...book,
       id: book.id,
       date: dataRef.current.value,
       description: descriptionRef.current.value,
@@ -28,18 +47,20 @@ const Detail = () => {
     };
     const isConfirm = confirm("수정 하시겠습니까?");
     if (isConfirm) {
-      setBooks((prev) =>
-        prev.map((prevBook) => (prevBook.id === book.id ? newBook : prevBook))
-      );
-      navigate("/");
+      // setBooks((prev) =>
+      //   prev.map((prevBook) => (prevBook.id === book.id ? newBook : prevBook))
+      // );
+      // navigate("/");
+      mutationEdit.mutate(newBook);
     }
   };
 
   const onClickDelete = () => {
     const isConfirm = confirm("삭제 하시겠습니까?");
     if (isConfirm) {
-      setBooks((prev) => prev.filter((prevBook) => prevBook.id !== book.id));
-      navigate("/");
+      // setBooks((prev) => prev.filter((prevBook) => prevBook.id !== book.id));
+      // navigate("/");
+      mutationDelete.mutate(book.id);
     }
   };
 

@@ -4,15 +4,31 @@ import InputContents from "./form/InputContents";
 import FormButton from "./form/FormButton";
 import { BooksContext } from "../constext/BooksProvider";
 import { FilteredContext } from "../constext/FilteredProvider";
+import { postData } from "../data/books";
+import { QueryClient, useMutation } from "@tanstack/react-query";
+import { AuthContext } from "../constext/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Form = () => {
   const { setBooks } = useContext(BooksContext);
   const { selectedMonth } = useContext(FilteredContext);
+  const { userInfo } = useContext(AuthContext);
+  // console.log(userInfo);
 
   const [date, setDate] = useState(`2024-${selectedMonth}-01`);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [item, setItem] = useState("");
+  const queryClient = new QueryClient();
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: postData,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["books"]);
+      navigate(0);
+    },
+  });
 
   useEffect(() => {
     setDate(`2024-${selectedMonth}-01`);
@@ -45,12 +61,16 @@ const Form = () => {
       description,
       amount,
       item,
+      createdBy: userInfo.id,
     };
     console.log("Date:", date);
     console.log("Item:", item);
     console.log("Amount:", amount);
     console.log("Description:", description);
-    setBooks((prev) => [...prev, newBooks]);
+
+    // setBooks((prev) => [...prev, newBooks]);
+
+    mutation.mutate(newBooks);
 
     setDate(`2024-${selectedMonth}-01`);
     setDescription("");

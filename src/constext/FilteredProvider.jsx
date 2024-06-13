@@ -7,7 +7,7 @@ const FilteredProvider = ({ children }) => {
   const { books } = useContext(BooksContext);
   const [filteredBooks, setFilteredBooks] = useState(books);
   const [selectedMonth, setSelectedMonth] = useState("");
-
+  // console.log(books);
   return (
     <FilteredContext.Provider
       value={{
