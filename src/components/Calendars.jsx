@@ -9,8 +9,10 @@ const Calendars = () => {
   const { setFilteredBooks, setSelectedMonth, selectedMonth } =
     useContext(FilteredContext);
 
+  const currentMonth = new Date().getMonth();
+
   useEffect(() => {
-    const savedMonth = localStorage.getItem("selectedMonth");
+    const savedMonth = localStorage.getItem("selectedMonth") || currentMonth;
     if (savedMonth) {
       setSelectedMonth(savedMonth);
       filteredBooks(savedMonth);

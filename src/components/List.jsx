@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FilteredContext } from "../constext/FilteredProvider";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "../data/books";
@@ -8,6 +8,8 @@ import { getData } from "../data/books";
 const List = () => {
   // const { filteredBooks } = useContext(FilteredContext);
   // console.log(books);
+  const [filteredData, setFilteredData] = useState([]);
+  const { selectedMonth } = useContext(FilteredContext);
 
   const {
     data: filteredBooks = [],
@@ -15,13 +17,29 @@ const List = () => {
     error,
   } = useQuery({ queryKey: ["books"], queryFn: getData });
 
+  useEffect(() => {
+    if (!filteredBooks) return;
+    if (isLoading || error) return;
+    if (!filteredBooks) return;
+
+    try {
+      const result = filteredBooks.filter((book) => {
+        const month = new Date(book.date).getMonth() + 1;
+        return month === +selectedMonth;
+      });
+      setFilteredData(result);
+    } catch (error) {
+      console.error("필터 리스트 에러");
+    }
+  }, [filteredBooks, selectedMonth, isLoading, error]);
+
   // console.log(isLoading);
   // console.log(filteredBooks);
 
   return (
     <StyledList>
       <StyledListInner>
-        {filteredBooks.map((book) => (
+        {filteredData.map((book) => (
           <StyledListItem key={book.id}>
             {book.date}
             <Link state={{ book }} to={`/detail/${book.id}`}>
@@ -32,7 +50,7 @@ const List = () => {
             작성자 :{book.createdBy}
           </StyledListItem>
         ))}
-        {filteredBooks.length === 0 && (
+        {filteredData.length === 0 && (
           <StyledListItem>
             <p>항목이 없습니다</p>
           </StyledListItem>

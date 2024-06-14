@@ -7,10 +7,12 @@ import FormButton from "../components/form/FormButton";
 import { BooksContext } from "../constext/BooksProvider";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { putData, deleteData } from "../data/books";
+import { AuthContext } from "../constext/AuthProvider";
 
 const Detail = () => {
   const { setBooks } = useContext(BooksContext);
-
+  const { userInfo } = useContext(AuthContext);
+  // console.log(userInfo.id);
   const location = useLocation();
   const navigate = useNavigate();
   const { book } = location.state;
@@ -35,8 +37,13 @@ const Detail = () => {
       queryClient.invalidateQueries(["books"]);
     },
   });
-
+  // console.log(book.createdBy);
   const onClickInputChange = () => {
+    if (userInfo.id !== book.createdBy) {
+      alert("수정 권한이 없습니다.");
+      return;
+    }
+
     const newBook = {
       ...book,
       id: book.id,
@@ -56,6 +63,11 @@ const Detail = () => {
   };
 
   const onClickDelete = () => {
+    if (userInfo.id !== book.createdBy) {
+      alert("삭제 권한이 없습니다.");
+      return;
+    }
+
     const isConfirm = confirm("삭제 하시겠습니까?");
     if (isConfirm) {
       // setBooks((prev) => prev.filter((prevBook) => prevBook.id !== book.id));

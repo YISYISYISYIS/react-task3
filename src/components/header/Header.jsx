@@ -21,8 +21,8 @@ const Header = () => {
     // isAuthenticated && (
     <StyledHeader>
       <Logo>
-        <Link to="/">Logo</Link>
-        <Link to="/mypage">프로필 수정하기</Link>
+        <LogoLink to="/">Logo</LogoLink>
+        <ProfileLink to="/mypage">프로필 수정하기</ProfileLink>
       </Logo>
       <AuthButtons>
         {userInfo && <ProfileImage src={userInfo.avatar} alt="Profile" />}
@@ -48,13 +48,13 @@ const Logo = styled.div`
   align-items: center;
 `;
 
-// const Link = styled.link`
-//   font-size: 1.5rem;
-//   /* font-weight: bold; */
-//   text-decoration: none;
-//   color: #fff;
-//   cursor: pointer;
-// `;
+const LogoLink = styled(Link)`
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+`;
 
 const Nickname = styled.span`
   margin: 0 1rem;
@@ -62,10 +62,17 @@ const Nickname = styled.span`
   cursor: pointer;
 `;
 
-// const Link = styled(LogoLink)`
-//   margin-left: 1rem;
-//   cursor: pointer;
-// `;
+const ProfileLink = styled(Link)`
+  font-size: 1rem;
+  text-decoration: none;
+  color: #ccc;
+  margin-left: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+  }
+`;
 
 const AuthButtons = styled.div`
   display: flex;
